@@ -1,9 +1,19 @@
 
+using ECommerce.Domain.Contracts;
+using ECommerce.Persistence.Data.DataSeed;
+using ECommerce.Persistence.Data.DbContexts;
+using ECommerce.Persistence.Repositories;
+using ECommerce.Service;
+using ECommerce.Service.Abstraction;
+using ECommerce.Service.MappingProfiles;
+using ECommerce.Web.Extensions;
+using Microsoft.EntityFrameworkCore;
+
 namespace ECommerce.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +24,28 @@ namespace ECommerce.Web
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
+            builder.Services.AddDbContext<StoreDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+            });
+
+            builder.Services.AddScoped<IDatainitilizer, DataInitilizer>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddAutoMapper(X => X.AddProfile<ProductProfile>());
+            builder.Services.AddScoped<IProductService, ProductService>();
+
+
             var app = builder.Build();
+
+
+            #region DataSeed
+
+            await app.MigrateDbAsync();
+            await app.SeedDbAsync();
+
+            #endregion
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

@@ -25,7 +25,7 @@ namespace ECommerce.Persistence.Repositories
         public async Task<IEnumerable<TEntity>> GetAllAsync()
             => await _dbContext.Set<TEntity>().ToListAsync();
 
-        public async Task<TEntity?> GetByIdAsync(int id)
+        public async Task<TEntity?> GetByIdAsync(TKey id)
             => await _dbContext.Set<TEntity>().FindAsync(id);
 
         public void Remove(TEntity entity)
@@ -33,5 +33,17 @@ namespace ECommerce.Persistence.Repositories
 
         public void Update(TEntity entity)
             => _dbContext.Set<TEntity>().Update(entity);
+
+        public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecification<TEntity, TKey> specification)
+        {
+            var Query = SpecificationEvaluator.CreateQuery(_dbContext.Set<TEntity>(), specification);
+            return await Query.ToListAsync();
+        }
+
+        public async Task<TEntity?> GetByIdAsync(ISpecification<TEntity, TKey> specification)
+            => await SpecificationEvaluator.CreateQuery(_dbContext.Set<TEntity>(), specification).FirstOrDefaultAsync();
+
+        public async Task<int> CountAsync(ISpecification<TEntity, TKey> specification)
+            => await SpecificationEvaluator.CreateQuery(_dbContext.Set<TEntity>(), specification).CountAsync();
     }
 }

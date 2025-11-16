@@ -19,42 +19,42 @@ namespace ECommerce.Persistence
 
             if (specification is not null)
             {
+                #region Where
+
+                if (specification.Criteria is not null)
+                    Query = Query.Where(specification.Criteria);
+
+                #endregion
+
+                #region Includes
+
                 if (specification.IncludeExpression is not null && specification.IncludeExpression.Any())
                 {
-                    #region Where
-
-                    if (specification.Criteria is not null)
-                        Query = Query.Where(specification.Criteria);
-
-                    #endregion
-
-                    #region Includes
-
                     //foreach (var IncludeExp in specification.IncludeExpression)
                     //    Query = Query.Include(IncludeExp);
 
                     Query = specification.IncludeExpression.Aggregate(Query, (CurrentQuery, IncludeExp) =>
                         CurrentQuery.Include(IncludeExp));
-
-                    #endregion
-
-                    #region Sorting
-
-                    if (specification.OrderBy is not null)
-                        Query = Query.OrderBy(specification.OrderBy);
-
-                    if (specification.OrderByDescending is not null)
-                        Query = Query.OrderByDescending(specification.OrderByDescending);
-
-                    #endregion
-
-                    #region Pagination
-
-                    if (specification.IsPaginated)
-                        Query = Query.Skip(specification.Skip).Take(specification.Take);
-
-                    #endregion
                 }
+
+                #endregion
+
+                #region Sorting
+
+                if (specification.OrderBy is not null)
+                    Query = Query.OrderBy(specification.OrderBy);
+
+                if (specification.OrderByDescending is not null)
+                    Query = Query.OrderByDescending(specification.OrderByDescending);
+
+                #endregion
+
+                #region Pagination
+
+                if (specification.IsPaginated)
+                    Query = Query.Skip(specification.Skip).Take(specification.Take);
+
+                #endregion
             }
 
             return Query;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ECommerce.Persentation.Attributes;
 using ECommerce.Service.Abstraction;
 using ECommerce.Shared;
 using ECommerce.Shared.DTOS.ProductDtos;
@@ -24,6 +25,7 @@ namespace ECommerce.Persentation.Controllers
         #region Get All Products
 
         [HttpGet]
+        [RedisCache(3)]
         // BaseUrl/api/Products
         public async Task<ActionResult<PaginatedResult<ProductDTO>>> GetAllProducts([FromQuery] ProductQueryParams queryParams)
         {
@@ -40,7 +42,23 @@ namespace ECommerce.Persentation.Controllers
         public async Task<ActionResult<ProductDTO>> GetProductById(int id)
         {
             var Product = await _productService.GetProductByIdAsync(id);
+            //if (Product is null) return NotFound($"No Product With Id : {id} Found");
             return Ok(Product);
+
+            //catch (Exception ex)
+            //{
+            //    switch (ex)
+            //    {
+            //        case ArgumentException: // Front End Exception
+            //            return BadRequest(ex.Message);
+            //        case InvalidOperationException:
+            //            return BadRequest("Invalid Operation");
+            //        case OutOfMemoryException:
+            //            return StatusCode(503, "Service Unavailable Try Again Later");
+            //        default:
+            //            return StatusCode(500, "Internal Server Error");
+            //    }
+            //}
         }
 
         #endregion

@@ -11,9 +11,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Persentation.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductsController : ControllerBase
+    //[ApiController]
+    //[Route("api/[controller]")]
+    public class ProductsController : ApiBaseController
     {
         private readonly IProductService _productService;
 
@@ -43,7 +43,9 @@ namespace ECommerce.Persentation.Controllers
         {
             var Product = await _productService.GetProductByIdAsync(id);
             //if (Product is null) return NotFound($"No Product With Id : {id} Found");
-            return Ok(Product);
+
+            //return Ok(Product);
+            return HandleResult<ProductDTO>(Product);
 
             //catch (Exception ex)
             //{

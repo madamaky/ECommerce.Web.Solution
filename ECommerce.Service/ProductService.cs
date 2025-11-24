@@ -10,6 +10,7 @@ using ECommerce.Service.Abstraction;
 using ECommerce.Service.Exceptions;
 using ECommerce.Service.Specification;
 using ECommerce.Shared;
+using ECommerce.Shared.CommonResult;
 using ECommerce.Shared.DTOS.ProductDtos;
 
 namespace ECommerce.Service
@@ -53,12 +54,13 @@ namespace ECommerce.Service
             return _mapper.Map<IEnumerable<TypeDTO>>(Types);
         }
 
-        public async Task<ProductDTO> GetProductByIdAsync(int id)
+        public async Task<Result<ProductDTO>> GetProductByIdAsync(int id)
         {
             var Spec = new ProductWithBrandAndTypeSpecification(id);
             var Product = await _unitOfWork.GetRepository<Product, int>().GetByIdAsync(Spec);
             if (Product is null)
-                throw new ProductNotFoundException(id);
+                //throw new ProductNotFoundException(id);
+                return Error.NotFound();
             return _mapper.Map<ProductDTO>(Product);
         }
     }

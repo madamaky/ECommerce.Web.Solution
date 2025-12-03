@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using ECommerce.Shared.CommonResult;
@@ -40,6 +41,8 @@ namespace ECommerce.Persentation.Controllers
             else
                 return HandleProblem(result.Errors);
         }
+
+        protected string GetEmailFromToken() => User.FindFirstValue(ClaimTypes.Email)!;
 
         private ActionResult HandleProblem(IReadOnlyList<Error> errors)
         {

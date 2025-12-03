@@ -1,4 +1,5 @@
 
+using System.Text;
 using ECommerce.Domain.Contracts;
 using ECommerce.Domain.Entities.IdentityModule;
 using ECommerce.Persistence.Data.DataSeed;
@@ -11,9 +12,11 @@ using ECommerce.Service.MappingProfiles;
 using ECommerce.Web.CustomMiddleWares;
 using ECommerce.Web.Extensions;
 using ECommerce.Web.Factories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
 
 namespace ECommerce.Web
@@ -23,6 +26,8 @@ namespace ECommerce.Web
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            #region Services
 
             // Add services to the container.
 
@@ -72,6 +77,28 @@ namespace ECommerce.Web
 
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; // Auth
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme; // UnAuth
+            }).AddJwtBearer(options =>
+            {
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidIssuer = builder.Configuration["JWTOptions:Issuer"],
+                    ValidAudience = builder.Configuration["JWTOptions:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTOptions:SecretKey"]!))
+                };
+            });
+
+            builder.Services.AddAutoMapper(X => X.AddProfile<OrderProfile>());
+            builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IPaymentService, PaymentService>();
+
+            #endregion
 
             var app = builder.Build();
 
@@ -100,6 +127,7 @@ namespace ECommerce.Web
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

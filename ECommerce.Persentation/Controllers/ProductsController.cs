@@ -7,12 +7,14 @@ using ECommerce.Persentation.Attributes;
 using ECommerce.Service.Abstraction;
 using ECommerce.Shared;
 using ECommerce.Shared.DTOS.ProductDtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Persentation.Controllers
 {
     //[ApiController]
     //[Route("api/[controller]")]
+    //[Authorize]
     public class ProductsController : ApiBaseController
     {
         private readonly IProductService _productService;
@@ -24,6 +26,7 @@ namespace ECommerce.Persentation.Controllers
 
         #region Get All Products
 
+        [Authorize]
         [HttpGet]
         [RedisCache(3)]
         // BaseUrl/api/Products

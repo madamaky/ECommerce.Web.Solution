@@ -12,5 +12,11 @@ namespace ECommerce.Shared.DTOS.BasketDTOs
     //    public ICollection<BasketItemDTO> Items { get; set; } = [];
     //}
 
-    public record BasketDTO(string Id, ICollection<BasketItemDTO> Items);
+    public record BasketDTO(
+        string Id,
+        ICollection<BasketItemDTO> Items,
+        string? ClientSecret,
+        string? PaymentIntentId,
+        int? DeliveryMethodId,
+        decimal? ShippingPrice);
 }

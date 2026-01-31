@@ -10,7 +10,7 @@ namespace ECommerce.Service.Specification
 {
     public class ProductWithBrandAndTypeSpecification : BaseSpecification<Product, int>
     {
-        public ProductWithBrandAndTypeSpecification(ProductQueryParams queryParams)
+        public ProductWithBrandAndTypeSpecification(ProductQueryParams queryParams, bool forDashboard = false)
             : base(ProductSpecificationHelper.GetProductCriteria(queryParams))
         {
             AddInclude(P => P.ProductBrand);
@@ -35,7 +35,8 @@ namespace ECommerce.Service.Specification
                     break;
             }
 
-            ApplyPagination(queryParams.PageSize, queryParams.PageIndex);
+            if (!forDashboard)
+                ApplyPagination(queryParams.PageSize, queryParams.PageIndex);
         }
 
         public ProductWithBrandAndTypeSpecification(int id) : base(P => P.Id == id)

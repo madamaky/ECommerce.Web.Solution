@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36408.4 d17.14
+VisualStudioVersion = 17.14.36408.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Web", "ECommerce.Web\ECommerce.Web.csproj", "{6B15A0E1-02E7-4BA7-AC67-348DD2080A21}"
 EndProject
@@ -22,6 +22,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Persistence", "ECommerce.Persistence\ECommerce.Persistence.csproj", "{C3B867D2-FA1A-493B-BA00-FAA206C83ED7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ECommerce.Persentation", "ECommerce.Persentation\ECommerce.Persentation.csproj", "{5C911B95-A54D-4EF9-9898-53C78BC75617}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UiLayer", "UiLayer", "{18ED5122-4F3C-4637-BE2E-E0BAD9AABE3F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AdminDashboard", "AdminDashboard", "{A7B5DC80-7799-482E-BDEE-0E3A50FAB28F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin.Dashboard", "Admin.Dashboard\Admin.Dashboard.csproj", "{FA01DFE2-C965-41C2-AEB2-1C0949E12566}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +63,10 @@ Global
 		{5C911B95-A54D-4EF9-9898-53C78BC75617}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C911B95-A54D-4EF9-9898-53C78BC75617}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C911B95-A54D-4EF9-9898-53C78BC75617}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA01DFE2-C965-41C2-AEB2-1C0949E12566}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA01DFE2-C965-41C2-AEB2-1C0949E12566}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA01DFE2-C965-41C2-AEB2-1C0949E12566}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA01DFE2-C965-41C2-AEB2-1C0949E12566}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +78,8 @@ Global
 		{AF3F98FC-5CC2-4BD9-BA21-C05ABEA8A296} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{C3B867D2-FA1A-493B-BA00-FAA206C83ED7} = {51491DA3-101D-498A-BEF7-C01E3727AC1E}
 		{5C911B95-A54D-4EF9-9898-53C78BC75617} = {6FE5B289-1D82-4572-A2DA-688BC5621580}
+		{A7B5DC80-7799-482E-BDEE-0E3A50FAB28F} = {18ED5122-4F3C-4637-BE2E-E0BAD9AABE3F}
+		{FA01DFE2-C965-41C2-AEB2-1C0949E12566} = {A7B5DC80-7799-482E-BDEE-0E3A50FAB28F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0E571310-677F-4B4B-8B00-8CE06394B7B6}
